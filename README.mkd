@@ -1,2 +1,28 @@
 FM Transmitter on Arduino
 =========================
+
+* Use the PWM to create an output wave
+* Pass the output voltage through a low pass filter using two poles
+* Use a queue for packets scheduled to send
+
+trackuino has a nice implementation of AX.25
+many rtty libraries available if that's overkill
+
+need to shift between 2 tones in the audio output. can either:
+
+* connect to a PWM
+* use a voltage divider on a digital output
+
+## Voltage divider method
+
+http://ukhas.org.uk/guides:linkingarduinotontx2?s[]=rtty
+
+then use this library: https://github.com/jonsowman/librtty
+
+how do we make that async with interrupts?
+
+http://ava.upuaut.net/?p=408
+
+create a timer interrupt to match the baud rate
+or keep track of when last bit was sent, and don't send another bit until time
+is up - might be simpler and still allows loop() to continue
