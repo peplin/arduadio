@@ -8,11 +8,13 @@
 RTTY rtty(TX_PIN, RADIO_BAUD_RATE, STOP_BITS, CHECKSUM_NONE);
 
 void setup() {
-    // initialize the digital pin as an output.
-    pinMode(TX_PIN, OUTPUT);
+    Serial.begin(115200);
+    Serial.println("Initialized");
 }
 
 void loop() {
-    rtty.transmit("A");
+    Serial.println("Sent");
+    char data[20] = "A";
+    rtty.transmit(data);
     delay(1000);
 }
