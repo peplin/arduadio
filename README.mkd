@@ -26,3 +26,18 @@ http://ava.upuaut.net/?p=408
 create a timer interrupt to match the baud rate
 or keep track of when last bit was sent, and don't send another bit until time
 is up - might be simpler and still allows loop() to continue
+
+## Status
+
+It's transmitting, and to my ears it sounds OK. I'm not able to decode the right
+characters in dl-fdigi, though - ABCDE comes through as other characters (forget
+right now). I've tried all possible combinations of stop bits, baud and parity,
+and it's not making a difference.
+
+I've tried 3 different implementations of RTTY and they're all showing the same
+problem, so something else must be wrong.
+
+* Are there timing issues? I'm running on a chipKIT Max32 now.
+* Is the HX1 doing something to the input signal that's mucking it up? The
+  audio over the radio sounds really clean and it looks OK on the waterwall, so
+  I don't think so.
