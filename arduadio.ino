@@ -2,10 +2,10 @@
 
 #define TX_PIN 7
 
-#define RADIO_BAUD_RATE 50
+#define RADIO_BAUD_RATE 110
 #define STOP_BITS 1.5
 
-RTTY rtty(TX_PIN, RADIO_BAUD_RATE, STOP_BITS, CHECKSUM_NONE);
+RTTY rtty(TX_PIN, RADIO_BAUD_RATE, STOP_BITS, CHECKSUM_NONE, true);
 
 void setup() {
     Serial.begin(115200);
@@ -13,8 +13,6 @@ void setup() {
 }
 
 void loop() {
-    Serial.println("Sent");
-    char data[20] = "A";
+    char data[50] = "all your base are belong to us";
     rtty.transmit(data);
-    delay(1000);
 }
