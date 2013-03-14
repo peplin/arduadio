@@ -6,8 +6,11 @@
 #define MAX_MESSAGE_LENGTH 255
 #define RADIO_BAUD_RATE 110
 #define STOP_BITS 1.5
+#define REVERSED true
+#define ECHO_TRANSMISSIONS true
 
-RTTY rtty(TX_PIN, RADIO_BAUD_RATE, STOP_BITS, CHECKSUM_NONE, true);
+RTTY rtty(TX_PIN, RADIO_BAUD_RATE, STOP_BITS, CHECKSUM_NONE, REVERSED,
+        ECHO_TRANSMISSIONS);
 
 QUEUE_DECLARE(uint8_t, 255);
 QUEUE_DEFINE(uint8_t);
@@ -22,10 +25,11 @@ void setup() {
 
 void loop() {
     if(QUEUE_EMPTY(uint8_t, &rttyQueue)) {
-        char data[50] = "all your base are belong to us";
+        char data[50] = "all your base are belong to us\r\n";
         int i = 0;
         while(data[i] != NULL) {
             QUEUE_PUSH(uint8_t, &rttyQueue, data[i]);
+            ++i;
         }
     }
 
