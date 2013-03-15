@@ -4,6 +4,3 @@
 [submodule "librtty"]
 	path = librtty
 	url = https://github.com/peplin/librtty.git
-[submodule "emqueue"]
-	path = emqueue
-	url = https://github.com/openxc/emqueue

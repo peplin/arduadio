@@ -1,39 +1,28 @@
 #include "rtty.h"
-#include "emqueue.h"
 
 #define TX_PIN 7
-
-#define MAX_MESSAGE_LENGTH 255
-#define RADIO_BAUD_RATE 110
-#define STOP_BITS 1.5
+#define RTTY_BAUD 110
+#define STOP_BITS 2
 #define REVERSED true
 #define ECHO_TRANSMISSIONS true
 
-RTTY rtty(TX_PIN, RADIO_BAUD_RATE, STOP_BITS, CHECKSUM_NONE, REVERSED,
+AsynchronousRTTY rtty(TX_PIN, RTTY_BAUD, STOP_BITS, CHECKSUM_NONE, REVERSED,
         ECHO_TRANSMISSIONS);
 
-QUEUE_DECLARE(uint8_t, 255);
-QUEUE_DEFINE(uint8_t);
-
-QUEUE_TYPE(uint8_t) rttyQueue;
+uint32_t rttyTransmitInterrupt(uint32_t currentTime) {
+    rtty.transmitInterrupt();
+    return (currentTime + CORE_TICK_RATE * (1.0 / RTTY_BAUD * 1000.0));
+}
 
 void setup() {
     Serial.begin(115200);
     Serial.println("Initialized");
-    QUEUE_INIT(uint8_t, &rttyQueue);
+    attachCoreTimerService(rttyTransmitInterrupt);
 }
 
 void loop() {
-    if(QUEUE_EMPTY(uint8_t, &rttyQueue)) {
+    if(rtty.bufferSize() == 0) {
         char data[50] = "all your base are belong to us\r\n";
-        int i = 0;
-        while(data[i] != NULL) {
-            QUEUE_PUSH(uint8_t, &rttyQueue, data[i]);
-            ++i;
-        }
-    }
-
-    if(!QUEUE_EMPTY(uint8_t, &rttyQueue)) {
-        rtty.transmit(QUEUE_POP(uint8_t, &rttyQueue));
+        rtty.transmitAsync(data);
     }
 }

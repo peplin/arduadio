@@ -1,5 +1,5 @@
 BOARD_TAG = mega_pic32
-ARDUINO_LIBS = librtty emqueue
+ARDUINO_LIBS = librtty librtty/emqueue
 
 USER_LIB_PATH = .
 
