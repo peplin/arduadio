@@ -1,7 +1,7 @@
 #include "rtty.h"
 
 #define TX_PIN 7
-#define RTTY_BAUD 110
+#define RTTY_BAUD 300
 #define STOP_BITS 2
 #define REVERSED true
 #define ECHO_TRANSMISSIONS true
