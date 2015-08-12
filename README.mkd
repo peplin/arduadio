@@ -18,6 +18,19 @@ Background: http://ukhas.org.uk/guides:linkingarduinotontx2?s[]=rtty
 
 ![Radio, Breadboard and chipKIT Wired Up](circuit.jpg)
 
+## Receiving
+
+The [minimodem](https://github.com/kamalmostafa/minimodem) tool works well for
+decoding. Just run:
+
+    minimodem --rx 300 --ascii --stopbits 2 -a -q
+
+where `300` is the baud rate you've configured for the transmitter.
+
+Run this to hear the audio locally (if you use pulseaudio):
+
+    pactl load-module module-loopback latency_msec=1
+
 ## Alternative Setups
 
 * Use the PWM to create an output wave
