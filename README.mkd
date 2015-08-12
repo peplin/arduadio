@@ -1,23 +1,39 @@
-FM Transmitter on Arduino
-=========================
+FM Transmitter on Arduino/chipKIT
+=================================
+
+
+## Hardware
+
+* chipKIT Max32
+* Radiometrix HX1 or similar radio
+* A couple of resistors, wire and a breadboard
+
+## Setup
+
+I recommend hooking up the radio to the chipKIT with a voltage divider circuit.
+The input to the radio needs to shift between 2 levels to represent the high/low
+tones for the modem protocol.
+
+Background: http://ukhas.org.uk/guides:linkingarduinotontx2?s[]=rtty
+
+![Radio, Breadboard and chipKIT Wired Up](circuit.jpg)
+
+## Alternative Setups
 
 * Use the PWM to create an output wave
 * Pass the output voltage through a low pass filter using two poles
-* Use a queue for packets scheduled to send
 
 trackuino has a nice implementation of AX.25
-many rtty libraries available if that's overkill
 
-need to shift between 2 tones in the audio output. can either:
+## Known Issues
 
-* connect to a PWM
-* use a voltage divider on a digital output
+SPACE/MARK were reversed, hence why we couldn't decode anything. Tested with the
+"Rv" button in dl-fdigi, then added an option to librtty to reverse in software.
+Our circuit needs to pull the TX pin HIGH to send SPACE, and LOW to send MARK.
 
-## Voltage divider method
+### Async?
 
-http://ukhas.org.uk/guides:linkingarduinotontx2?s[]=rtty
-
-then use this library: https://github.com/jonsowman/librtty
+Use a queue for packets scheduled to send?
 
 how do we make that async with interrupts?
 
@@ -27,8 +43,3 @@ create a timer interrupt to match the baud rate
 or keep track of when last bit was sent, and don't send another bit until time
 is up - might be simpler and still allows loop() to continue
 
-## Status
-
-SPACE/MARK were reversed, hence why we couldn't decode anything. Tested with the
-"Rv" button in dl-fdigi, then added an option to librtty to reverse in software.
-Our circuit needs to pull the TX pin HIGH to send SPACE, and LOW to send MARK.
