@@ -5,8 +5,10 @@
 #define STOP_BITS 2
 #define REVERSED true
 #define ECHO_TRANSMISSIONS true
+#define ASCII_BITSIZE 7
 
-AsynchronousRTTY rtty(TX_PIN, RTTY_BAUD, STOP_BITS, CHECKSUM_NONE, REVERSED,
+AsynchronousRTTY rtty(TX_PIN, RTTY_BAUD, STOP_BITS, ASCII_BITSIZE,
+        CHECKSUM_NONE, REVERSED,
         ECHO_TRANSMISSIONS);
 
 uint32_t rttyTransmitInterrupt(uint32_t currentTime) {
