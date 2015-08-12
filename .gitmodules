@@ -1,6 +1,6 @@
 [submodule "arduino.mk"]
 	path = arduino.mk
-	url = https://github.com/peplin/arduino.mk
+	url = https://github.com/sudar/Arduino-Makefile
 [submodule "librtty"]
 	path = librtty
 	url = https://github.com/peplin/librtty.git
