@@ -1,5 +1,6 @@
 #include "rtty.h"
 
+#define ENABLE_PIN 3
 #define TX_PIN 7
 #define RTTY_BAUD 1200
 #define STOP_BITS 2
@@ -7,9 +8,8 @@
 #define ECHO_TRANSMISSIONS true
 #define ASCII_BITSIZE 7
 
-AsynchronousRTTY rtty(TX_PIN, RTTY_BAUD, STOP_BITS, ASCII_BITSIZE,
-        CHECKSUM_NONE, REVERSED,
-        ECHO_TRANSMISSIONS);
+AsynchronousRTTY rtty(ENABLE_PIN, TX_PIN, RTTY_BAUD, STOP_BITS, ASCII_BITSIZE,
+        CHECKSUM_NONE, REVERSED, ECHO_TRANSMISSIONS);
 
 String message;
 
