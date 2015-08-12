@@ -11,6 +11,8 @@ AsynchronousRTTY rtty(TX_PIN, RTTY_BAUD, STOP_BITS, ASCII_BITSIZE,
         CHECKSUM_NONE, REVERSED,
         ECHO_TRANSMISSIONS);
 
+String message;
+
 uint32_t rttyTransmitInterrupt(uint32_t currentTime) {
     rtty.transmitInterrupt();
     return (currentTime + CORE_TICK_RATE * (1.0 / RTTY_BAUD * 1000.0));
@@ -23,8 +25,19 @@ void setup() {
 }
 
 void loop() {
-    if(rtty.bufferSize() == 0) {
-        char data[50] = "all your base are belong to us\r\n";
+    while (Serial.available() > 0) {
+        char received = Serial.read();
+        Serial.print(received);
+        message += received;
+    }
+
+    if(message.indexOf("\r") != -1 && rtty.bufferSize() == 0) {
+        Serial.println("");
+        Serial.println("Sending " + message);
+        char data[500] = {};
+        message.toCharArray(data, sizeof(data));
+        message = "";
         rtty.transmitAsync(data);
+        Serial.print("Message to send: ");
     }
 }
